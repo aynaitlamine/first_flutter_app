@@ -1,18 +1,34 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
+import 'package:first_flutter_app/screens/email_signin_screen.dart';
+import 'package:first_flutter_app/services/auth.dart';
 import 'package:first_flutter_app/widgets/signin_button.dart';
 import 'package:first_flutter_app/widgets/social_button.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
-  const SignIn({Key? key}) : super(key: key);
+  const SignIn({Key? key, required this.auth}) : super(key: key);
+
+  final AuthBase auth;
 
   Future<void> _signAnonymously() async {
     try {
-      final userCredentials = await FirebaseAuth.instance.signInAnonymously();
-      print(userCredentials.user);
+      await auth.signInAnonymously();
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      await auth.signInWithGoogle();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  void _signWithEmail(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute<void>(
+        fullscreenDialog: true, builder: (context) => const EmailSingIn()));
   }
 
   @override
@@ -36,7 +52,7 @@ class SignIn extends StatelessWidget {
             ),
             const SizedBox(height: 20.0),
             SignInSocial(
-              onPressed: () {},
+              onPressed: _signInWithGoogle,
               text: 'Sign in with google',
               color: Colors.white,
               textColor: Colors.black87,
@@ -52,7 +68,7 @@ class SignIn extends StatelessWidget {
             ),
             const SizedBox(height: 10.0),
             SignInButton(
-              onPressed: () {},
+              onPressed: () => _signWithEmail(context),
               text: 'Sign in with email',
               color: Colors.teal[700],
               textColor: Colors.white,
