@@ -13,11 +13,13 @@ class EmailSingIn extends StatelessWidget {
         centerTitle: true,
       ),
       body: const Padding(
-        padding: EdgeInsets.all(16),
-        child: Card(
-          child: EmailSignInForm(),
-        ),
-      ),
+          padding: EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            reverse: true,
+            child: Card(
+              child: EmailSignInForm(),
+            ),
+          )),
     );
   }
 }
