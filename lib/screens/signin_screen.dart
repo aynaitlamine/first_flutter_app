@@ -28,7 +28,10 @@ class SignIn extends StatelessWidget {
 
   void _signWithEmail(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute<void>(
-        fullscreenDialog: true, builder: (context) => const EmailSingIn()));
+        fullscreenDialog: true,
+        builder: (context) => EmailSingIn(
+              auth: auth,
+            )));
   }
 
   @override
@@ -41,52 +44,54 @@ class SignIn extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const Text(
-              'Sign In',
-              style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20.0),
-            SignInSocial(
-              onPressed: _signInWithGoogle,
-              text: 'Sign in with google',
-              color: Colors.white,
-              textColor: Colors.black87,
-              image: 'images/google-logo.png',
-            ),
-            const SizedBox(height: 10.0),
-            SignInSocial(
-              onPressed: () {},
-              text: 'Sign in with facebook',
-              color: const Color(0xFF334D92),
-              textColor: Colors.white,
-              image: 'images/facebook-logo.png',
-            ),
-            const SizedBox(height: 10.0),
-            SignInButton(
-              onPressed: () => _signWithEmail(context),
-              text: 'Sign in with email',
-              color: Colors.teal[700],
-              textColor: Colors.white,
-            ),
-            const SizedBox(height: 10.0),
-            const Text(
-              'or',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14),
-            ),
-            const SizedBox(height: 10.0),
-            SignInButton(
-              onPressed: _signAnonymously,
-              text: 'Continue anonymous',
-              color: Colors.lime[300],
-              textColor: Colors.black87,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              const Text(
+                'Sign In',
+                style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20.0),
+              SignInSocial(
+                onPressed: _signInWithGoogle,
+                text: 'Sign in with google',
+                color: Colors.white,
+                textColor: Colors.black87,
+                image: 'images/google-logo.png',
+              ),
+              const SizedBox(height: 10.0),
+              SignInSocial(
+                onPressed: () {},
+                text: 'Sign in with facebook',
+                color: const Color(0xFF334D92),
+                textColor: Colors.white,
+                image: 'images/facebook-logo.png',
+              ),
+              const SizedBox(height: 10.0),
+              SignInButton(
+                onPressed: () => _signWithEmail(context),
+                text: 'Sign in with email',
+                color: Colors.teal[700],
+                textColor: Colors.white,
+              ),
+              const SizedBox(height: 10.0),
+              const Text(
+                'or',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 10.0),
+              SignInButton(
+                onPressed: _signAnonymously,
+                text: 'Continue anonymous',
+                color: Colors.lime[300],
+                textColor: Colors.black87,
+              ),
+            ],
+          ),
         ),
       ),
       backgroundColor: Colors.grey[200],

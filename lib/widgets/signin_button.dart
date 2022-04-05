@@ -14,7 +14,7 @@ class SignInButton extends CustomElevatedButton {
             child: Text(
               text ?? 'error',
               style:
-                  TextStyle(color: textColor ?? Colors.black87, fontSize: 14),
+                  TextStyle(color: textColor ?? Colors.black87, fontSize: 16),
             ),
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
