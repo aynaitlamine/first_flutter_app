@@ -1,11 +1,8 @@
-import 'package:first_flutter_app/services/auth.dart';
-import 'package:first_flutter_app/widgets/email_signin_form.dart';
+import 'package:first_flutter_app/common_widgets/email_signin_form.dart';
 import 'package:flutter/material.dart';
 
 class EmailSingIn extends StatelessWidget {
-  const EmailSingIn({Key? key, required this.auth}) : super(key: key);
-
-  final AuthBase auth;
+  const EmailSingIn({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +17,7 @@ class EmailSingIn extends StatelessWidget {
           child: SingleChildScrollView(
             reverse: true,
             child: Card(
-              child: EmailSignInForm(
-                auth: auth,
-              ),
+              child: EmailSignInForm(),
             ),
           )),
     );

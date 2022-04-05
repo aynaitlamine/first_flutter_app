@@ -1,13 +1,13 @@
 import 'dart:developer';
 
 import 'package:first_flutter_app/helpers/validators.dart';
+import 'package:first_flutter_app/common_widgets/signin_button.dart';
 import 'package:first_flutter_app/services/auth.dart';
-import 'package:first_flutter_app/widgets/signin_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EmailSignInForm extends StatefulWidget with EmailAndPasswordValidators {
-  EmailSignInForm({Key? key, required this.auth}) : super(key: key);
-  final AuthBase auth;
+  EmailSignInForm({Key? key}) : super(key: key);
   @override
   State<EmailSignInForm> createState() => _EmailSignInFormState();
 }
@@ -35,15 +35,30 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     });
     try {
       Future.delayed(const Duration(seconds: 3));
+      final auth = Provider.of<AuthBase>(context, listen: false);
       if (_formType == EmailSignInFormType.signIn) {
-        await widget.auth.signInWithEmailAndPassword(_email, _password);
+        await auth.signInWithEmailAndPassword(_email, _password);
       } else {
-        await widget.auth.createUserWithEmailAndPassword(_email, _password);
+        await auth.createUserWithEmailAndPassword(_email, _password);
       }
 
       Navigator.of(context).pop();
     } catch (e) {
       log(e.toString());
+
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Sign in failed'),
+              content: Text(e.toString()),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('OK'))
+              ],
+            );
+          });
     } finally {
       setState(() {
         _isLoading = false;
