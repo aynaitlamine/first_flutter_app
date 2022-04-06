@@ -1,5 +1,5 @@
-import 'dart:developer';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_flutter_app/common_widgets/show_exception_alert_dialog.dart';
 import 'package:first_flutter_app/helpers/validators.dart';
 import 'package:first_flutter_app/common_widgets/signin_button.dart';
 import 'package:first_flutter_app/services/auth.dart';
@@ -28,6 +28,15 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   bool _submitted = false;
   bool _isLoading = false;
 
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
   void _onSubmit() async {
     setState(() {
       _submitted = true;
@@ -43,22 +52,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       }
 
       Navigator.of(context).pop();
-    } catch (e) {
-      log(e.toString());
-
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Sign in failed'),
-              content: Text(e.toString()),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('OK'))
-              ],
-            );
-          });
+    } on FirebaseAuthException catch (e) {
+      showExceptionAlertDialog(context, title: 'Sign in failed', exception: e);
     } finally {
       setState(() {
         _isLoading = false;

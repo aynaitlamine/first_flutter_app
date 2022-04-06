@@ -1,5 +1,6 @@
-import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_flutter_app/common_widgets/show_alert_dialog.dart';
+import 'package:first_flutter_app/common_widgets/show_exception_alert_dialog.dart';
 import 'package:first_flutter_app/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +11,8 @@ class Home extends StatelessWidget {
     final auth = Provider.of<AuthBase>(context, listen: false);
     try {
       await auth.signOut();
-    } catch (e) {
-      log(e.toString());
+    } on FirebaseAuthException catch (e) {
+      showExceptionAlertDialog(context, title: 'Sign out failed', exception: e);
     }
   }
 
