@@ -1,17 +1,47 @@
+import 'package:first_flutter_app/helpers/validators.dart';
+
 enum EmailSignInFormType { signIn, register }
 
-class EmailSignInModel {
+class EmailSignInModel extends EmailAndPasswordValidators {
   EmailSignInModel(
-      {this.email,
-      this.password,
+      {this.email = '',
+      this.password = '',
       this.formType = EmailSignInFormType.signIn,
       this.isLoading = false,
       this.submitted = false});
-  final String? email;
-  final String? password;
+  final String email;
+  final String password;
   final EmailSignInFormType? formType;
   final bool isLoading;
   final bool submitted;
+
+  String? get passwordErrorText {
+    bool showErrorText = submitted && !passwordValidator.isValid(password);
+    return showErrorText ? invalidPasswordErrorText : null;
+  }
+
+  String? get emailErrorText {
+    bool showErrorText = submitted && !emailValidator.isValid(email);
+    return showErrorText ? invalidEmailErrorText : null;
+  }
+
+  String get primaryButtonText {
+    return formType == EmailSignInFormType.signIn
+        ? 'Sign in'
+        : 'Create an account';
+  }
+
+  String get secondaryButtonText {
+    return formType == EmailSignInFormType.signIn
+        ? 'Need an account? Register'
+        : 'Have an account? Sign in';
+  }
+
+  bool get canSubmit {
+    return emailValidator.isValid(email) &&
+        passwordValidator.isValid(password) &&
+        !isLoading;
+  }
 
   EmailSignInModel copyWith(
       {String? email,
