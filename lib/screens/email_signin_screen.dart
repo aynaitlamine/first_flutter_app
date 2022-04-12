@@ -1,4 +1,4 @@
-import 'package:first_flutter_app/common_widgets/email_signin_form.dart';
+import 'package:first_flutter_app/common_widgets/email_signin_form_bloc_based.dart';
 import 'package:flutter/material.dart';
 
 class EmailSingIn extends StatelessWidget {
@@ -17,7 +17,7 @@ class EmailSingIn extends StatelessWidget {
           child: SingleChildScrollView(
             reverse: true,
             child: Card(
-              child: EmailSignInForm(),
+              child: EmailSignInFormBlock.create(context),
             ),
           )),
     );

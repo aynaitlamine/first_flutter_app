@@ -17,7 +17,7 @@ class Landing extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.active) {
             final User? user = snapshot.data;
             if (user == null) {
-              return const SignIn();
+              return SignIn.create(context);
             }
             return const Home();
           }
